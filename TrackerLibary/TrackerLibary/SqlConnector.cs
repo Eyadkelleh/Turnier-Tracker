@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using Dapper;
 
@@ -25,13 +26,9 @@ namespace TrackerLibary
                 dynamicParameters.Add("@PlaceName", model.PlaceName);
                 dynamicParameters.Add("@PrizeAmount", model.PrizeAmount);
                 dynamicParameters.Add("@PrizePerecentage", model.PrizePercentage);
+                dynamicParameters.Add("@id",0, dbType: DbType.Int32, direction: ParameterDirection.Output);
             }
 
         }
     }
 }
-////@PlaceNumber int,
-////@PlaceName nvarchar(50),
-////@PrizeAmount money,
-////@PrizePerecentage float,
-////@id int = 0 output
