@@ -25,16 +25,31 @@ namespace TrackerUI
         {
             if (ValidateFrom())
             {
-               PrizeModel model = new PrizeModel();
-                model.PlaceName = placeNameValue.Text;
-                model.PlaceNumber = placeNumberValue.Text;
+                PrizeModel model = new PrizeModel(
+                    placeNameValue.Text,
+                    placeNumberValue.Text,
+                    prizeAmountLabel.Text,
+                    prizePercentageValue.Text);
+                foreach (IDataConnection db in GlobalConfig.Connections)
+                {
+                    db.CretePrize(model);
+                }
+
+                placeNameValue.Text = "";
+                placeNumberValue.Text = "";
+                prizeAmountLabel.Text = "0";
+                prizePercentageValue.Text = "0";
+            }
+            else
+            {
+                MessageBox.Show(@"This form has invalid information");
             }
         }
 
         private bool ValidateFrom()
         {
             int placeNumber = 0;
-            bool placeNumberValidNumber = int.TryParse(placeNameValue.Text, out placeNumber);
+            bool placeNumberValidNumber = int.TryParse(placeNumberValue.Text, out placeNumber);
             if (placeNumberValidNumber == false)
             {
                 _output = false;
@@ -57,29 +72,29 @@ namespace TrackerUI
                 _output = false;
             }
 
-            if (prizeAmount < 1)
+            if (prizeAmount > 1)
             {
                 _output = false;
             }
 
-            int prizePerecentage = 0;
-            bool prizePercentageInteger = int.TryParse(prizePercentageValue.Text, out prizePerecentage);
+            double prizePercentage = 0;
+            bool prizePercentageInteger = double.TryParse(prizePercentageValue.Text, out prizePercentage);
             if (prizePercentageInteger == false)
             {
                 _output = false;
             }
 
-            if (prizePerecentage < 0)
+            if (prizePercentage < 0)
             {
                 _output = false;
             }
 
-            if (prizePerecentage > 100)
+            if (prizePercentage > 100)
             {
                 _output = false;
             }
 
-            return _output;
+            return _output = true;
         }
     }
 }
