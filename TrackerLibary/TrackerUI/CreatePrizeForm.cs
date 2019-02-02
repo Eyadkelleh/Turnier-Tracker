@@ -1,20 +1,100 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using TrackerLibary;
 
 namespace TrackerUI
 {
     public partial class CreatePrizeForm : Form
     {
+        private bool _output;
         public CreatePrizeForm()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// The create prize button_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void createPrizeButton_Click(object sender, EventArgs e)
+        {
+            if (ValidateFrom())
+            {
+                PrizeModel model = new PrizeModel(
+                    placeNameValue.Text,
+                    placeNumberValue.Text,
+                    prizeAmountLabel.Text,
+                    prizePercentageValue.Text);
+                foreach (IDataConnection db in GlobalConfig.Connections)
+                {
+                    db.CretePrize(model);
+                }
+
+                placeNameValue.Text = "";
+                placeNumberValue.Text = "";
+                prizeAmountLabel.Text = "0";
+                prizePercentageValue.Text = "0";
+            }
+            else
+            {
+                MessageBox.Show(@"This form has invalid information");
+            }
+        }
+
+        private bool ValidateFrom()
+        {
+            int placeNumber = 0;
+            bool placeNumberValidNumber = int.TryParse(placeNumberValue.Text, out placeNumber);
+            if (placeNumberValidNumber == false)
+            {
+                _output = false;
+            }
+
+            if (placeNumber < 1)
+            {
+                _output = false;
+            }
+
+            if (placeNameValue.Text.Length == 0)
+            {
+                _output = false;
+            }
+
+            decimal prizeAmount = 0;
+            bool prizeAmountDecimal = decimal.TryParse(prizeAmountValue.Text, out prizeAmount);
+            if (prizeAmountDecimal == false)
+            {
+                _output = false;
+            }
+
+            if (prizeAmount > 1)
+            {
+                _output = false;
+            }
+
+            double prizePercentage = 0;
+            bool prizePercentageInteger = double.TryParse(prizePercentageValue.Text, out prizePercentage);
+            if (prizePercentageInteger == false)
+            {
+                _output = false;
+            }
+
+            if (prizePercentage < 0)
+            {
+                _output = false;
+            }
+
+            if (prizePercentage > 100)
+            {
+                _output = false;
+            }
+
+            return _output = true;
         }
     }
 }

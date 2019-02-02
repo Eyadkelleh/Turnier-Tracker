@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackerLibary", "TrackerLibary\TrackerLibary.csproj", "{FE7A7387-9B2B-43AA-B28F-9E3EDB9B922C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackerLibrary", "TrackerLibary\TrackerLibrary.csproj", "{FE7A7387-9B2B-43AA-B28F-9E3EDB9B922C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackerUI", "TrackerUI\TrackerUI.csproj", "{6A42F692-92F5-4503-B015-FBE056EDF634}"
 EndProject
