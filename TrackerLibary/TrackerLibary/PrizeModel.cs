@@ -13,5 +13,18 @@
         public string PlaceName { get; set; }
         public decimal PrizeAmount { get; set; }
         public double PrizePerecentage { get; set; }
+
+        public PrizeModel()
+        {
+            
+        }
+
+        public  PrizeModel(string placeName, string placeNumber, string prizeAmount, string prizePerecentage)
+        {
+            PlaceName = placeName;
+            int placeNumberVAlue = 0;
+            int.TryParse(placeNumber, out placeNumberVAlue);
+
+        }
     }
 }

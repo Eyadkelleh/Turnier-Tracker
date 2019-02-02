@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using TrackerLibary;
 
 namespace TrackerUI
 {
@@ -11,9 +12,23 @@ namespace TrackerUI
             InitializeComponent();
         }
 
+        /// <summary>
+        /// The create prize button_ click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
         private void createPrizeButton_Click(object sender, EventArgs e)
         {
-            ValidateFrom();
+            if (ValidateFrom())
+            {
+               PrizeModel model = new PrizeModel();
+                model.PlaceName = placeNameValue.Text;
+                model.PlaceNumber = placeNumberValue.Text;
+            }
         }
 
         private bool ValidateFrom()
