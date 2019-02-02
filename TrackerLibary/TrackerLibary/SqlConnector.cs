@@ -10,7 +10,7 @@ namespace TrackerLibary
     /// </summary>
     public class SqlConnector : IDataConnection
     {
-        private string localStringSQLName = "Tournament";
+        private string localStringSQLName = "Tournaments";
         /// <summary>
         /// Save a new prize to database.
         /// </summary>
@@ -26,8 +26,13 @@ namespace TrackerLibary
                 dynamicParameters.Add("@PlaceName", model.PlaceName);
                 dynamicParameters.Add("@PrizeAmount", model.PrizeAmount);
                 dynamicParameters.Add("@PrizePerecentage", model.PrizePercentage);
-                dynamicParameters.Add("@id",0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                dynamicParameters.Add("@id",0, DbType.Int32, ParameterDirection.Output);
+                connection.Execute("dbo.spPrizes",dynamicParameters, commandType: CommandType.StoredProcedure);
+
+                model.Id = dynamicParameters.Get<int>("@id");
+                return model;
             }
+
 
         }
     }
